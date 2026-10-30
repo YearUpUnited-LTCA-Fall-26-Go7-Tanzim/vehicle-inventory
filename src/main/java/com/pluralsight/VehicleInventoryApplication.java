@@ -43,6 +43,36 @@ public class VehicleInventoryApplication {
                 case 2:
                     findVehiclesByMakeModel(vehicles, vehicleCount, scanner);
                     break;
+                case 5: {
+                    if (vehicleCount >= vehicles.length) {
+                        System.out.println("The lot is full, no more vehicles can be added.");
+                        break;
+                    }
+                    System.out.print("Vehicle ID: ");
+                    long id = Long.parseLong(scanner.nextLine().trim());
+                    System.out.print("Make/model: ");
+                    String makeModel = scanner.nextLine().trim();
+                    System.out.print("Color: ");
+                    String color = scanner.nextLine().trim();
+                    System.out.print("Odometer reading: ");
+                    int odometer = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.print("Price: ");
+                    double price = Double.parseDouble(scanner.nextLine().trim());
+
+                    vehicles[vehicleCount] = new Vehicle(id, makeModel, color, odometer, price);
+                    vehicleCount++;
+
+                    System.out.println("Vehicle added!");
+                    break;
+
+
+                }
+                case 3:
+                    findVehiclesByPrice(vehicles, vehicleCount, scanner);
+                    break;2
+                case 4:
+                    findVehiclesByColor(vehicles, vehicleCount, scanner);
+                    break;
                 case 6:
                     running = false;
                     break;
@@ -72,6 +102,32 @@ public class VehicleInventoryApplication {
             if (v.getMakeModel().toLowerCase().contains(search)) {
                 System.out.println(v.getVehicleId() + " | " + v.getMakeModel() + " | " + v.getColor() + " | " + v.getOdometerReading() + " miles | $" + v.getPrice());
 
+            }
+        }
+    }
+    public static void findVehiclesByColor(Vehicle[] vehicles, int count, Scanner scanner) {
+        System.out.print("Enter color to search: ");
+        String search = scanner.nextLine().trim();
+
+        for (int i = 0; i < count; i++) {
+            Vehicle v = vehicles[i];
+            if (v.getColor().equalsIgnoreCase(search)) {
+                System.out.println(v.getVehicleId() + " | " + v.getMakeModel() + " | " + v.getColor() + " | " + v.getOdometerReading() + " miles | $" + v.getPrice());
+
+            }
+        }
+    }
+    public static void findVehiclesByPrice(Vehicle[] vehicles, int count, Scanner scanner) {
+        System.out.print("Enter minimum price: ");
+        double min = Double.parseDouble(scanner.nextLine().trim());
+        System.out.print("Enter maximum price: ");
+        double max = Double.parseDouble(scanner.nextLine().trim());
+
+        for (int i = 0; i < count; i++) {
+            Vehicle v = vehicles[i];
+            if (v.getPrice() >= min && v.getPrice() <= max) {
+                System.out.println(v.getVehicleId() + " | " + v.getMakeModel() + " | " + v.getColor() + " | " + v.getOdometerReading() + " miles | $" + v.getPrice());
+                
             }
         }
     }
